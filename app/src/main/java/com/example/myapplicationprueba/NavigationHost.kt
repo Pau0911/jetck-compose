@@ -11,15 +11,17 @@ fun NavigationHost(){
     NavHost(navController=navController, startDestination=Destinations.SearchView.route){
         composable(Destinations.SearchView.route){
             SearchView(
-                goViewDetails = { textSearch->
-                    navController.navigate(Destinations.Pantalla2.createRoute(textSearch))
+                goToDetailsView = { searchText->
+                    navController.navigate(Destinations.ResultsView.createRoute(searchText))
                 }
             )
         }
-        composable(Destinations.Pantalla2.route){
+        composable(Destinations.ResultsView.route){
             navBackStackEntry ->
-            var textSearch=navBackStackEntry.arguments?.getString("textSearch")
-            Pantalla2(textSearch!!)
+            var searchText=navBackStackEntry.arguments?.getString("searchText")
+            ResultsView(searchText!!)
+
+
         }
     }
 }
