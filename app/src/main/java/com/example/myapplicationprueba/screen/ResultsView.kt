@@ -1,6 +1,5 @@
 package com.example.myapplicationprueba
 
-import android.graphics.Paint.Style
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -14,7 +13,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun Pantalla2(text:String){
+fun ResultsView(text:String){
     Column(modifier = Modifier
         .fillMaxHeight()
         .padding(16.dp),

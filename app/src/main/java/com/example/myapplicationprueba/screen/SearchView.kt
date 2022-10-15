@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.sp
 
 
 @Composable
-fun SearchView(goViewDetails: (String) -> Unit) {
+fun SearchView(goToDetailsView: (String) -> Unit) {
     var text by remember { mutableStateOf("") }
 
     Column(
@@ -50,7 +50,7 @@ fun SearchView(goViewDetails: (String) -> Unit) {
             )
         Button(
             onClick = {
-                goViewDetails(text)
+                goToDetailsView(text)
             },colors = ButtonDefaults.buttonColors(backgroundColor = Color.Yellow),
             modifier = Modifier.padding(top = 10.dp)
 
