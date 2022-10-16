@@ -1,5 +1,6 @@
 package com.example.myapplicationprueba
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -14,6 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -45,8 +47,11 @@ import kotlinx.coroutines.flow.Flow
 @Composable
 fun ResultsView(text: String, resultViewModel: ResultsViewModel = hiltViewModel()) {
     Scaffold(topBar = {
-        TopAppBar(title = { Text(text = "Mostrando resultados para:$text")
-
+        TopAppBar(title = {
+            Text(text = "Mostrando resultados para:$text")
+//            IconButton(onClick = { /*TODO*/ }) {
+//                Icon(Icons.Default.Favorite)
+//            }
         }, backgroundColor = Color.Yellow)
     }) { paddingValues ->
         Column(
@@ -67,7 +72,7 @@ fun ProductList(products: Flow<PagingData<Product>>) {
 
         items(lazyProductItems) { product ->
             ProductItem(product = product!!, onClick = {
-
+                Log.d("Click al item: ", product.id)
             })
         }
 
@@ -100,7 +105,7 @@ fun ProductList(products: Flow<PagingData<Product>>) {
 
 
 @Composable
-fun ProductItem(product: Product,onClick: () -> Unit) {
+fun ProductItem(product: Product, onClick: () -> Unit) {
     Card(
         modifier = Modifier
             .padding(
@@ -124,40 +129,31 @@ fun ProductItem(product: Product,onClick: () -> Unit) {
                     alpha = 0.2f
                 )
             ) {
-                val painter= rememberAsyncImagePainter(product.thumbnail)
-                Image( painter = painter,
-                    contentDescription = null,
-                    modifier = Modifier
-                        .height(100.dp)
-                        .clip(shape = RoundedCornerShape(12.dp)),
-                    contentScale = ContentScale.Crop )
-//                ProductImage(product.thumbnail,modifier = Modifier
-//                    .padding(start = 16.dp)
-//                    .size(90.dp)
-//                )
+                val painter = rememberAsyncImagePainter(product.thumbnail)
+                ProductImage(painter)
 
-            }
-            Column(
-                modifier = Modifier
-                    .padding(start = 12.dp)
-                    .align(Alignment.CenterVertically)
-            ) {
-                Text(
-                    text = product.title,
-                    fontWeight = FontWeight.Bold,
-                    style = TextStyle(fontSize = 22.sp),
-                    color = Color.Black
-                )
-                CompositionLocalProvider(
-                    LocalContentAlpha provides ContentAlpha.medium
+                Column(
+                    modifier = Modifier
+                        .padding(start = 12.dp)
+                        .align(Alignment.CenterVertically)
                 ) {
                     Text(
-                        text = product.price.toString(),
-                        style = typography.body2,
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis,
-                        modifier = Modifier.padding(end = 25.dp)
+                        text = product.title,
+                        fontWeight = FontWeight.Bold,
+                        style = TextStyle(fontSize = 22.sp),
+                        color = Color.Black
                     )
+                    CompositionLocalProvider(
+                        LocalContentAlpha provides ContentAlpha.medium
+                    ) {
+                        Text(
+                            text = product.price.toString(),
+                            style = typography.body2,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
+                            modifier = Modifier.padding(end = 25.dp)
+                        )
+                    }
                 }
             }
         }
@@ -166,18 +162,19 @@ fun ProductItem(product: Product,onClick: () -> Unit) {
 
 @Composable
 fun ProductImage(
-    imageUrl: String, modifier: Modifier = Modifier
+    painter: Painter
 ) {
-    AsyncImage(
-        model = ImageRequest.Builder(LocalContext.current).data(imageUrl).crossfade(true).build(),
-        placeholder = painterResource(R.drawable.ic_launcher_background),
-        alpha = 0.45f,
+    Image(
+        painter = painter,
         contentDescription = null,
-        contentScale = ContentScale.Crop,
-        modifier = modifier
+        modifier = Modifier
+            .height(100.dp)
+            .clip(shape = RoundedCornerShape(12.dp)),
+        contentScale = ContentScale.Crop
     )
 
 }
+
 
 @Composable
 fun ProductTitle(
@@ -190,4 +187,4 @@ fun ProductTitle(
         style = MaterialTheme.typography.h6,
         overflow = TextOverflow.Ellipsis
     )
-}
+}}
