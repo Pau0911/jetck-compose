@@ -50,6 +50,7 @@ fun ResultsView(text: String, resultViewModel: ResultsViewModel = hiltViewModel(
     Scaffold(topBar = {
         TopAppBar(title = {
             Text(text = "Mostrando resultados para: $text")
+
 //            IconButton(onClick = { /*TODO*/ }) {
 //                Icon(Icons.Default.Favorite)
 //            }
@@ -131,8 +132,9 @@ fun ProductItem(product: Product, onClick: () -> Unit) {
                 )
             ) {
                 val painter = rememberAsyncImagePainter(product.thumbnail)
-                ProductImage(product.thumbnail, modifier = Modifier)
-            }
+
+                ProductImage(painter)
+
                 Column(
                     modifier = Modifier
                         .padding(start = 12.dp)
@@ -159,22 +161,24 @@ fun ProductItem(product: Product, onClick: () -> Unit) {
             }
         }
     }
+}
 
 
 @Composable
 fun ProductImage(
-    imageUrl: String, modifier: Modifier = Modifier
+    painter: Painter
 ) {
-    AsyncImage(
-        model = ImageRequest.Builder(LocalContext.current).data(imageUrl).crossfade(true).build(),
-        placeholder = painterResource(R.drawable.ic_launcher_background),
-        alpha = 0.45f,
+    Image(
+        painter = painter,
         contentDescription = null,
-        contentScale = ContentScale.Crop,
-        modifier = modifier
+        modifier = Modifier
+            .height(100.dp)
+            .clip(shape = RoundedCornerShape(12.dp)),
+        contentScale = ContentScale.Crop
     )
 
 }
+
 
 @Composable
 fun ProductTitle(
@@ -187,4 +191,4 @@ fun ProductTitle(
         style = MaterialTheme.typography.h6,
         overflow = TextOverflow.Ellipsis
     )
-}
+}}
