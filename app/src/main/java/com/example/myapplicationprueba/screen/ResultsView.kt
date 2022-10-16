@@ -45,7 +45,9 @@ import kotlinx.coroutines.flow.Flow
 @Composable
 fun ResultsView(text: String, resultViewModel: ResultsViewModel = hiltViewModel()) {
     Scaffold(topBar = {
-        TopAppBar(title = { Text(text = "Mostrando resultados") })
+        TopAppBar(title = { Text(text = "Mostrando resultados para:$text")
+
+        }, backgroundColor = Color.Yellow)
     }) { paddingValues ->
         Column(
             modifier = Modifier.padding(bottom = paddingValues.calculateBottomPadding())
