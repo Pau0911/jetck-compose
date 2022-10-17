@@ -8,6 +8,7 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.example.myapplicationprueba.model.Product
+import com.example.myapplicationprueba.model.ProductDetails
 import com.example.myapplicationprueba.model.Response
 import com.example.myapplicationprueba.repository.ProductRepository
 import com.example.myapplicationprueba.repository.paged.ProductSource
@@ -24,14 +25,9 @@ class ResultsViewModel @Inject constructor(
 
     val DEFAULT_SITE_ID: String = "MCO"
 
-    fun getProduct(id: String) {
-        viewModelScope.launch {
-            val product = productRepository.getProduct(id)
-            Log.d("Producto ", product.title)
-        }
-    }
-    fun getResults(searchText: String): Flow<PagingData<Product>>{
-         val products: Flow<PagingData<Product>> = Pager(PagingConfig(pageSize = 20)) {
+
+    fun getResults(searchText: String): Flow<PagingData<Product>> {
+        val products: Flow<PagingData<Product>> = Pager(PagingConfig(pageSize = 20)) {
             ProductSource(
                 productRepository,
                 searchText,
@@ -41,7 +37,6 @@ class ResultsViewModel @Inject constructor(
             .cachedIn(viewModelScope)
         return products
     }
-
 
 
 }

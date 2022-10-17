@@ -32,6 +32,7 @@
                 <arg>$USER_HOME$/.gradle/caches/transforms-3/17e2c4a1e30d028210d90bf1fc229e52/transformed/ui-test-junit4-1.1.1-api.jar</arg>
                 <arg>$USER_HOME$/.gradle/caches/transforms-3/0fa39897b2b0c28427fb3013b2bfdff6/transformed/junit-1.1.3-api.jar</arg>
                 <arg>$USER_HOME$/.gradle/caches/transforms-3/f2e4b72cb9410ad3452080c653e683d3/transformed/espresso-core-3.4.0-api.jar</arg>
+                <arg>$USER_HOME$/.gradle/caches/transforms-3/15d3f7952eae0599a254110c07479ca3/transformed/constraintlayout-compose-1.0.0-api.jar</arg>
                 <arg>$USER_HOME$/.gradle/caches/transforms-3/df9857dd4326ae5aaa13a9df6c687acf/transformed/hilt-navigation-compose-1.0.0-api.jar</arg>
                 <arg>$USER_HOME$/.gradle/caches/transforms-3/9e863ac00cb67a011749348f0b4eb9d4/transformed/navigation-compose-2.4.0-api.jar</arg>
                 <arg>$USER_HOME$/.gradle/caches/transforms-3/9070c98747eabf08791302048dfbca37/transformed/activity-compose-1.3.1-api.jar</arg>

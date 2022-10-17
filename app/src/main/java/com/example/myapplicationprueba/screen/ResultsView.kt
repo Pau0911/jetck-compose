@@ -46,7 +46,7 @@ import kotlinx.coroutines.flow.Flow
 
 
 @Composable
-fun ResultsView(text: String, resultViewModel: ResultsViewModel = hiltViewModel()) {
+fun ResultsView(text: String,goToDetailsView: (String) -> Unit ,resultViewModel: ResultsViewModel = hiltViewModel()) {
     Scaffold(topBar = {
         TopAppBar(title = {
             Text(text = "Mostrando resultados para: $text")
@@ -59,7 +59,7 @@ fun ResultsView(text: String, resultViewModel: ResultsViewModel = hiltViewModel(
         Column(
             modifier = Modifier.padding(bottom = paddingValues.calculateBottomPadding())
         ) {
-            ProductList(products = resultViewModel.getResults(text))
+            ProductList(products = resultViewModel.getResults(text),goToDetailsView)
         }
     }
 
@@ -67,14 +67,14 @@ fun ResultsView(text: String, resultViewModel: ResultsViewModel = hiltViewModel(
 
 
 @Composable
-fun ProductList(products: Flow<PagingData<Product>>) {
+fun ProductList(products: Flow<PagingData<Product>>,goToDetailsView: (String) -> Unit) {
     val lazyProductItems = products.collectAsLazyPagingItems()
 
     LazyColumn {
 
         items(lazyProductItems) { product ->
             ProductItem(product = product!!, onClick = {
-                Log.d("Click al item: ", product.id)
+                goToDetailsView(product.id)
             })
         }
 
@@ -134,7 +134,7 @@ fun ProductItem(product: Product, onClick: () -> Unit) {
                 val painter = rememberAsyncImagePainter(product.thumbnail)
 
                 ProductImage(painter)
-
+            }
                 Column(
                     modifier = Modifier
                         .padding(start = 12.dp)
@@ -161,7 +161,7 @@ fun ProductItem(product: Product, onClick: () -> Unit) {
             }
         }
     }
-}
+
 
 
 @Composable
@@ -191,4 +191,4 @@ fun ProductTitle(
         style = MaterialTheme.typography.h6,
         overflow = TextOverflow.Ellipsis
     )
-}}
+}
