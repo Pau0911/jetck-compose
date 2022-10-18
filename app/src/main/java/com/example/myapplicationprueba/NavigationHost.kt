@@ -27,7 +27,6 @@ fun NavigationHost(){
         composable(Destinations.DetailsView.route){
                 navBackStackEntry ->
             val id=navBackStackEntry.arguments?.getString("id")
-
             DetailsView(id!!)
         }
     }

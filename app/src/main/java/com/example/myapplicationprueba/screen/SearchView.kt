@@ -3,6 +3,9 @@ package com.example.myapplicationprueba
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
@@ -17,6 +20,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.myapplicationprueba.ui.theme.buttonPrimary
+import com.example.myapplicationprueba.ui.theme.color_primary
+import okhttp3.internal.wait
 
 
 @Composable
@@ -26,6 +32,8 @@ fun SearchView(goToResultsView: (String) -> Unit) {
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .verticalScroll(rememberScrollState())
+            .fillMaxWidth()
             .padding(16.dp),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
@@ -33,6 +41,7 @@ fun SearchView(goToResultsView: (String) -> Unit) {
 
         TextField(
             value = text,
+            shape = RoundedCornerShape(15.dp),
             modifier = Modifier
                 .padding(start = 10.dp, end = 10.dp)
                 .background(color = Color.White),
@@ -46,16 +55,15 @@ fun SearchView(goToResultsView: (String) -> Unit) {
                 text = newText
             },
             placeholder = { Text(text = "Buscar un producto") },
-
             )
         Button(
             onClick = {
                 goToResultsView(text)
-            },colors = ButtonDefaults.buttonColors(backgroundColor = Color.Yellow),
+            },colors = ButtonDefaults.buttonColors(backgroundColor = buttonPrimary),
             modifier = Modifier.padding(top = 10.dp)
 
         ) {
-            Text(text = "Buscar")
+            Text(text = "Buscar", color = Color.White)
 
         }
 

@@ -10,6 +10,11 @@ import androidx.compose.foundation.magnifier
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.MaterialTheme.typography
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
@@ -17,6 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -40,26 +46,39 @@ import com.example.myapplicationprueba.model.Product
 import com.example.myapplicationprueba.screen.state.ErrorItem
 import com.example.myapplicationprueba.screen.state.LoadingItem
 import com.example.myapplicationprueba.screen.state.LoadingView
+import com.example.myapplicationprueba.ui.theme.buttonPrimary
+import com.example.myapplicationprueba.ui.theme.color_primary
 import com.example.myapplicationprueba.viewModel.ResultsViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 
 
 @Composable
-fun ResultsView(text: String,goToDetailsView: (String) -> Unit ,resultViewModel: ResultsViewModel = hiltViewModel()) {
+fun ResultsView(
+    text: String,
+    goToDetailsView: (String) -> Unit,
+    resultViewModel: ResultsViewModel = hiltViewModel()
+) {
     Scaffold(topBar = {
         TopAppBar(title = {
+            IconButton(
+                modifier = Modifier.padding(10.dp),
+                onClick = { }
+            ) {
+                Icon(
+                    Icons.Filled.Search,
+                    "contentDescription", tint = buttonPrimary
+                )
+            }
             Text(text = "Mostrando resultados para: $text")
 
-//            IconButton(onClick = { /*TODO*/ }) {
-//                Icon(Icons.Default.Favorite)
-//            }
-        }, backgroundColor = Color.Yellow)
+
+        }, backgroundColor = color_primary)
     }) { paddingValues ->
         Column(
             modifier = Modifier.padding(bottom = paddingValues.calculateBottomPadding())
         ) {
-            ProductList(products = resultViewModel.getResults(text),goToDetailsView)
+            ProductList(products = resultViewModel.getResults(text), goToDetailsView)
         }
     }
 
@@ -67,7 +86,7 @@ fun ResultsView(text: String,goToDetailsView: (String) -> Unit ,resultViewModel:
 
 
 @Composable
-fun ProductList(products: Flow<PagingData<Product>>,goToDetailsView: (String) -> Unit) {
+fun ProductList(products: Flow<PagingData<Product>>, goToDetailsView: (String) -> Unit) {
     val lazyProductItems = products.collectAsLazyPagingItems()
 
     LazyColumn {
@@ -125,7 +144,7 @@ fun ProductItem(product: Product, onClick: () -> Unit) {
                 .background(MaterialTheme.colors.surface)
         ) {
             Surface(
-                modifier = Modifier.size(130.dp),
+                modifier = Modifier.size(110.dp),
                 shape = RoundedCornerShape(12.dp),
                 color = MaterialTheme.colors.surface.copy(
                     alpha = 0.2f
@@ -135,33 +154,35 @@ fun ProductItem(product: Product, onClick: () -> Unit) {
 
                 ProductImage(painter)
             }
-                Column(
-                    modifier = Modifier
-                        .padding(start = 12.dp)
-                        .align(Alignment.CenterVertically)
+            Column(
+                modifier = Modifier
+                    .padding(start = 12.dp)
+                    .align(Alignment.CenterVertically)
+            ) {
+                Text(
+                    text = product.title,
+                    fontWeight = FontWeight.Bold,
+                    style = TextStyle(fontSize = 15.sp),
+                    color = Color.Black
+                )
+                CompositionLocalProvider(
+                    LocalContentAlpha provides ContentAlpha.medium
                 ) {
-                    Text(
-                        text = product.title,
-                        fontWeight = FontWeight.Bold,
-                        style = TextStyle(fontSize = 22.sp),
-                        color = Color.Black
-                    )
-                    CompositionLocalProvider(
-                        LocalContentAlpha provides ContentAlpha.medium
-                    ) {
+                    if (product.price.toString() != null) {
                         Text(
-                            text = product.price.toString(),
-                            style = typography.body2,
+                            text = String.format("$ %,d", product.price),
+                            style = TextStyle(fontSize = 15.sp),
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis,
                             modifier = Modifier.padding(end = 25.dp)
                         )
                     }
+
                 }
             }
         }
     }
-
+}
 
 
 @Composable
@@ -172,7 +193,7 @@ fun ProductImage(
         painter = painter,
         contentDescription = null,
         modifier = Modifier
-            .height(100.dp)
+            .height(24.dp)
             .clip(shape = RoundedCornerShape(12.dp)),
         contentScale = ContentScale.Crop
     )

@@ -26,7 +26,6 @@ data class ProductDetails(
     val last_updated: String,
     val listing_source: String,
     val listing_type_id: String,
-    val location: Location,
     val non_mercado_pago_payment_methods: List<Any>,
     val official_store_id: Any,
     val original_price: Any,
@@ -82,8 +81,6 @@ data class ProductDetails(
             )
         }
     }
-
-    class Location
 
     data class Picture(
         val id: String,
