@@ -13,14 +13,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.rememberAsyncImagePainter
 import com.example.myapplicationprueba.R
 import com.example.myapplicationprueba.Response
 import com.example.myapplicationprueba.model.ProductDetails
+import com.example.myapplicationprueba.ui.theme.Fonts
 import com.example.myapplicationprueba.ui.theme.buttonPrimary
 import com.example.myapplicationprueba.ui.theme.color_primary
 import com.example.myapplicationprueba.viewModel.ProductDetailsViewModel
@@ -53,7 +57,11 @@ fun DetailsView(
                         "contentDescription", tint = buttonPrimary
                     )
                 }
-                Text(text = "Detalles del producto")
+                Text(
+                    text = "Detalles del producto",
+                    fontFamily = Fonts,
+                    fontWeight = FontWeight.Normal
+                )
             }, backgroundColor = color_primary, modifier = modifier.align(Alignment.Center))
         }) {
 
@@ -76,7 +84,7 @@ fun DetailsView(
 fun StandardCard(
     modifier: Modifier = Modifier
         .verticalScroll(rememberScrollState())
-        .padding(top=20.dp),
+        .padding(top = 20.dp),
 
     productDetails: ProductDetails?,
     elevation: Dp = 1.dp,
@@ -132,7 +140,11 @@ fun StandardCard(
                     // Encabezado
                     Text(
                         text = productDetails?.title.toString(),
-                        style = MaterialTheme.typography.h6
+                        style = TextStyle(
+                            fontSize = 16.sp,
+                            fontFamily = Fonts,
+                            fontWeight = FontWeight.Normal
+                        )
                     )
                 }
             }
@@ -157,7 +169,11 @@ fun StandardCard(
                             text = String.format("$ %,d", productDetails.price),
                             maxLines = 2,
                             overflow = TextOverflow.Ellipsis,
-                            style = MaterialTheme.typography.h6,
+                            style = TextStyle(
+                                fontSize = 16.sp,
+                                fontFamily = Fonts,
+                                fontWeight = FontWeight.Light
+                            ),
                         )
                     }
                 }
@@ -165,7 +181,10 @@ fun StandardCard(
 
             Row(Modifier.padding(start = 16.dp, end = 24.dp, top = 16.dp)) {
                 if (productDetails?.seller_address?.city?.name != null) {
-                    Icon(painter = painterResource(id = R.drawable.location), contentDescription = "Ubicación")
+                    Icon(
+                        painter = painterResource(id = R.drawable.location),
+                        contentDescription = "Ubicación"
+                    )
 
                     Spacer(modifier = Modifier.width(8.dp))
 
@@ -174,7 +193,11 @@ fun StandardCard(
                         text = productDetails?.seller_address?.city?.name,
                         maxLines = 2,
                         overflow = TextOverflow.Ellipsis,
-                        style = MaterialTheme.typography.h6,
+                        style = TextStyle(
+                            fontSize = 16.sp,
+                            fontFamily = Fonts,
+                            fontWeight = FontWeight.Light
+                        ),
                     )
 
                 }
@@ -187,18 +210,26 @@ fun StandardCard(
                     text = "Caracteristicas",
                     maxLines = 2,
                     overflow = TextOverflow.Ellipsis,
-                    style = MaterialTheme.typography.h6,
+                    style = TextStyle(
+                        fontSize = 16.sp,
+                        fontFamily = Fonts,
+                        fontWeight = FontWeight.Normal
+                    ),
                 )
             }
 
             Row(Modifier.padding(start = 16.dp, end = 24.dp, top = 16.dp)) {
 
                 CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
-                    if (productDetails?.attributes?.get(0) != null) {
+                    if (productDetails?.attributes?.get(0)!= null) {
                         Text(
                             color = Color.Black,
                             text = productDetails?.attributes.get(0).name + ":",
-                            style = MaterialTheme.typography.body1,
+                            style = TextStyle(
+                                fontSize = 16.sp,
+                                fontFamily = Fonts,
+                                fontWeight = FontWeight.Light
+                            ),
                         )
                     }
 
@@ -208,11 +239,15 @@ fun StandardCard(
             Row(Modifier.padding(start = 16.dp, end = 24.dp, top = 16.dp)) {
                 CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
 
-                    if (productDetails?.attributes?.get(0)!= null) {
+                    if (productDetails?.attributes?.get(0) != null) {
                         Text(
                             color = Color.Black,
                             text = productDetails?.attributes.get(0).value_name,
-                            style = MaterialTheme.typography.body1,
+                            style = TextStyle(
+                                fontSize = 16.sp,
+                                fontFamily = Fonts,
+                                fontWeight = FontWeight.Light
+                            ),
                         )
                     }
                 }
@@ -232,15 +267,21 @@ fun StandardCard(
                     // Botones
                     Row(modifier = Modifier.align(Alignment.CenterStart)) {
 
-                        TextButton(onClick = { /*TODO*/ }) {
-                            Text(text = "Comprar", color = buttonPrimary)
+                        Button(
+                            onClick = { /*TODO*/ },
+                            colors = ButtonDefaults.buttonColors(backgroundColor = buttonPrimary)
+                        ) {
+                            Text(text = "Comprar", color = Color.White)
+
                         }
 
                         Spacer(modifier = Modifier.width(8.dp))
 
-                        TextButton(onClick = {
-                        }) {
-                            Text(text = "Agregar al carrito", color = buttonPrimary)
+                        Button(
+                            onClick = {},
+                            colors = ButtonDefaults.buttonColors(backgroundColor = buttonPrimary)
+                        ) {
+                            Text(text = "Agregar al carrito", color = Color.White)
                         }
                     }
 

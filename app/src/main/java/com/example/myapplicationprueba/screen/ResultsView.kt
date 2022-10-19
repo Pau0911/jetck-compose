@@ -28,6 +28,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.Role.Companion.Image
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -46,6 +47,7 @@ import com.example.myapplicationprueba.model.Product
 import com.example.myapplicationprueba.screen.state.ErrorItem
 import com.example.myapplicationprueba.screen.state.LoadingItem
 import com.example.myapplicationprueba.screen.state.LoadingView
+import com.example.myapplicationprueba.ui.theme.Fonts
 import com.example.myapplicationprueba.ui.theme.buttonPrimary
 import com.example.myapplicationprueba.ui.theme.color_primary
 import com.example.myapplicationprueba.viewModel.ResultsViewModel
@@ -70,9 +72,8 @@ fun ResultsView(
                     "contentDescription", tint = buttonPrimary
                 )
             }
-            Text(text = "Mostrando resultados para: $text")
-
-
+            Text(text = "Mostrando resultados para: $text", style = TextStyle(fontSize = 21.sp, fontFamily = Fonts, fontWeight =FontWeight.Normal ),
+            )
         }, backgroundColor = color_primary)
     }) { paddingValues ->
         Column(
@@ -162,7 +163,7 @@ fun ProductItem(product: Product, onClick: () -> Unit) {
                 Text(
                     text = product.title,
                     fontWeight = FontWeight.Bold,
-                    style = TextStyle(fontSize = 15.sp),
+                    style = TextStyle(fontSize = 16.sp, fontFamily = Fonts, fontWeight =FontWeight.Normal ),
                     color = Color.Black
                 )
                 CompositionLocalProvider(
@@ -171,7 +172,7 @@ fun ProductItem(product: Product, onClick: () -> Unit) {
                     if (product.price.toString() != null) {
                         Text(
                             text = String.format("$ %,d", product.price),
-                            style = TextStyle(fontSize = 15.sp),
+                            style = TextStyle(fontSize = 15.sp, fontFamily = Fonts, fontWeight = FontWeight.Light),
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis,
                             modifier = Modifier.padding(end = 25.dp)

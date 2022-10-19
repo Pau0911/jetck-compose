@@ -40,7 +40,7 @@ fun MyApplicationPruebaTheme(
 
     MaterialTheme(
         colors = colors,
-        typography = Typography,
+        typography = Tipo,
         shapes = Shapes,
         content = content
     )
